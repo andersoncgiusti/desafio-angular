@@ -6,7 +6,7 @@
 # Clonar o repositório
 git clone
 
-# Enter the
+# Acesse o arquivo
 cd desafio-angular
 
 # Instale as dependências
