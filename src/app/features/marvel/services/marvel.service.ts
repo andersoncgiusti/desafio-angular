@@ -2,14 +2,15 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import * as CryptoJS from 'crypto-js';
 import { Observable } from 'rxjs';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MarvelService {
-  private baseUrl = 'https://gateway.marvel.com/v1/public';
-  private publicKey = '35b9bc41652d8411d1fd3609fb35fa1d';
-  private privateKey = '644ce1995e337d373df60f7646374765bd156411';
+  private baseUrl = environment.marvelApi.baseUrl;
+  private publicKey = environment.marvelApi.publicKey;
+  private privateKey = environment.marvelApi.privateKey;
 
   constructor(private http: HttpClient) {}
 
