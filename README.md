@@ -1,6 +1,6 @@
 # Desafio Angular
 
-> Este projeto foi gerado com[Angular CLI](https://github.com/angular/angular-cli) versão 17.3.11.
+> Este projeto foi gerado com [Angular CLI](https://github.com/angular/angular-cli) versão 17.3.11.
 
 ```sh
 # Clonar o repositório
@@ -19,7 +19,7 @@ npm start
 npm start
 ```
 
-### Aplicação hospedada de forma estática no bucket da IBM Cloud.
+## Aplicação hospedada de forma estática no bucket da IBM Cloud.
 
 ```
 https://desafio-angular.s3-web.us-south.cloud-object-storage.appdomain.cloud/marvel
