@@ -22,7 +22,7 @@ npm start
 ## Aplicação hospedada de forma estática no bucket da IBM Cloud.
 
 ```
-https://desafio-angular.s3-web.us-south.cloud-object-storage.appdomain.cloud/marvel
+https://desafio-angular.s3-web.us-south.cloud-object-storage.appdomain.cloud
 ```
 
 # Arquitetura
