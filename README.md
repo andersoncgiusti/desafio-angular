@@ -7,7 +7,7 @@
 git clone
 
 # Enter the
-cd turbo-bench-back
+cd desafio-angular
 
 # Instale as dependências
 npm install
