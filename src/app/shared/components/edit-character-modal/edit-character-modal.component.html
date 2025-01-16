@@ -1,0 +1,18 @@
+<div *ngIf="editingCharacter" class="modal-overlay" (click)="cancelEdit()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <h3>Editar Personagem</h3>
+    <form (ngSubmit)="submitEdit()">
+      <label for="name">Nome:</label>
+      <input id="name" [(ngModel)]="editingCharacter.name" name="name" required />
+
+      <label for="description">Descrição:</label>
+      <input id="description" [(ngModel)]="editingCharacter.description" name="description" required />
+
+      <label for="thumbnail">Thumbnail (URL):</label>
+      <input id="thumbnail" [(ngModel)]="editingCharacter.thumbnail.path" name="thumbnail" required />
+
+      <button type="submit">Salvar Alterações</button>
+      <button type="button" (click)="cancelEdit()">Cancelar</button>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,101 @@
+<div *ngIf="isLoading">Carregando...</div>
+
+<div *ngIf="!isLoading" class="create">
+  <button class="button-create" (click)="openCreateModal()">Adicionar Personagem</button>
+
+  <!-- Sem compente de modal reutilizável add-character-modal  -->
+  <!-- <div *ngIf="showCreateModal" class="modal-overlay" (click)="cancelCreate()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <h3>Criar Personagem</h3>
+      <form (ngSubmit)="submitCreate()">
+        <label for="name">Nome:</label>
+        <input id="name" [(ngModel)]="newCharacter.name" name="name" required />
+
+        <label for="description">Descrição:</label>
+        <input id="description" [(ngModel)]="newCharacter.description" name="description" required />
+
+        <label for="thumbnail">Thumbnail (URL):</label>
+        <input id="thumbnail" [(ngModel)]="newCharacter.thumbnail.path" name="thumbnail" required />
+
+        <button type="submit">Salvar Personagem</button>
+        <button type="button" (click)="cancelCreate()">Cancelar</button>
+      </form>
+    </div>
+  </div> -->
+
+  <!-- Compente de modal reutilizável add-character-modal  -->
+  <app-add-character-modal [showModal]="showCreateModal" [newCharacter]="newCharacter" (save)="submitCreate()"
+    (cancel)="cancelCreate()">
+  </app-add-character-modal>
+</div>
+
+<div *ngIf="!isLoading" class="search">
+  <input type="text" [(ngModel)]="searchQuery" placeholder="Pesquisar personagem..." />
+</div>
+
+<div *ngIf="!isLoading">
+  <div *ngIf="characters && characters.length > 0" class="characters-grid">
+    <div class="character-card" *ngFor="let character of filteredCharacters()">
+      <img [src]="character.thumbnail.path + '.' + character.thumbnail.extension" alt="{{ character.name }}"
+        class="character-thumbnail" />
+      <h3>{{ character.name }}</h3>
+      <p>{{ character.description || 'Sem descrição' }}</p>
+
+      <div>
+        <button class="button-edit" (click)="editCharacter(character)">Editar Personagem</button>
+        <button class="button-red" (click)="deleteCharacter(character.id)">Excluir Personagem</button>
+        <button class="button-gray" (click)="viewCharacterDetails(character.id)">Ver Detalhes</button>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="filteredCharacters()?.length === 0" class="no-results">
+    <p>Nenhum personagem encontrado.</p>
+  </div>
+</div>
+
+<!-- Sem compente de modal reutilizável edit-character-modal  -->
+<!-- <div *ngIf="editingCharacter" class="modal-overlay" (click)="cancelEdit()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <h3>Editar Personagem</h3>
+    <form (ngSubmit)="submitEdit()">
+      <label for="name">Nome:</label>
+      <input id="name" [(ngModel)]="editingCharacter.name" name="name" />
+
+      <label for="description">Descrição:</label>
+      <input id="description" [(ngModel)]="editingCharacter.description" name="description" />
+
+      <label for="thumbnail">Thumbnail (URL):</label>
+      <input id="thumbnail" [(ngModel)]="editingCharacter.thumbnail.path" name="thumbnail" />
+
+      <button type="submit">Salvar Alterações</button>
+      <button type="button" (click)="cancelEdit()">Cancelar</button>
+    </form>
+  </div>
+</div> -->
+
+<!-- Compente de modal reutilizável edit-character-modal  -->
+<app-edit-character-modal *ngIf="editingCharacter" [editingCharacter]="editingCharacter" (cancel)="cancelEdit()"
+  (save)="submitEdit()">
+</app-edit-character-modal>
+
+<!-- Sem compente de modal reutilizável view-character-modal  -->
+<!-- <div *ngIf="showDetailsModal" class="modal-overlay" (click)="closeDetailsModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <h3>{{ selectedCharacter?.name }}</h3>
+    <img [src]="selectedCharacter?.thumbnail.path + '.' + selectedCharacter?.thumbnail.extension" alt="Thumbnail"
+      class="character-thumbnail" />
+    <p><strong>Descrição:</strong> {{ selectedCharacter?.description || 'Sem descrição' }}</p>
+    <p><strong>Data de Modificação:</strong> {{ selectedCharacter?.modified }}</p>
+    <p><strong>Comics:</strong></p>
+    <ul>
+      <li *ngFor="let comic of selectedCharacter?.comics.items">{{ comic.name }}</li>
+    </ul>
+    <button type="button" (click)="closeDetailsModal()">Fechar</button>
+  </div>
+</div> -->
+
+<!-- Compente de modal reutilizável view-character-modal  -->
+<app-view-character-modal *ngIf="showDetailsModal" [selectedCharacter]="selectedCharacter"
+  (close)="closeDetailsModal()">
+</app-view-character-modal>

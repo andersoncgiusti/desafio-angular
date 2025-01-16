@@ -1,0 +1,14 @@
+<div *ngIf="selectedCharacter" class="modal-overlay" (click)="onClose()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <h3>{{ selectedCharacter?.name }}</h3>
+    <img [src]="selectedCharacter?.thumbnail.path + '.' + selectedCharacter?.thumbnail.extension" alt="Thumbnail"
+      class="character-thumbnail" />
+    <p><strong>Descrição:</strong> {{ selectedCharacter?.description || 'Sem descrição' }}</p>
+    <p><strong>Data de Modificação:</strong> {{ selectedCharacter?.modified }}</p>
+    <p><strong>Comics:</strong></p>
+    <ul>
+      <li *ngFor="let comic of selectedCharacter?.comics.items">{{ comic.name }}</li>
+    </ul>
+    <button type="button" (click)="onClose()">Fechar</button>
+  </div>
+</div>
