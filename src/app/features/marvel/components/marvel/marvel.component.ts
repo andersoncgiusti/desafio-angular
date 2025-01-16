@@ -35,9 +35,6 @@ export class MarvelComponent {
     this.marvelService.getCharacters().subscribe(
       (response) => {
         this.characters = response.data?.results || [];
-        console.log('====================================');
-        console.log('Personagens:', this.characters);
-        console.log('====================================');
         this.isLoading = false;
       },
       (error) => {

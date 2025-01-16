@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import * as CryptoJS from 'crypto-js';
 import { Observable } from 'rxjs';
 
@@ -14,18 +14,17 @@ export class MarvelService {
   constructor(private http: HttpClient) {}
 
   // Função para gerar os parâmetros comuns
-  private generateParams(limit?: number): { [key: string]: string } {
+  private generateParams(limit?: number): HttpParams {
     const ts = new Date().getTime();
     const hash = CryptoJS.MD5(ts + this.privateKey + this.publicKey).toString();
 
-    const params: { [key: string]: string } = {
-      ts: ts.toString(),
-      apikey: this.publicKey,
-      hash: hash,
-    };
+    let params = new HttpParams()
+      .set('ts', ts.toString())
+      .set('apikey', this.publicKey)
+      .set('hash', hash);
 
     if (limit) {
-      params['limit'] = limit.toString();
+      params = params.set('limit', limit.toString());
     }
 
     return params;

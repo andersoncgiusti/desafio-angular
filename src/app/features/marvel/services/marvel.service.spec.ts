@@ -2,6 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { MarvelService } from './marvel.service';
 import { HttpClient } from '@angular/common/http';
+import * as CryptoJS from 'crypto-js';
 
 describe('MarvelService', () => {
   let service: MarvelService;
@@ -44,7 +45,11 @@ describe('MarvelService', () => {
     });
 
     // Mocka a requisição HTTP
-    const req = httpMock.expectOne('https://gateway.marvel.com/v1/public/characters?ts=');
+    const ts = new Date().getTime();
+    const hash = CryptoJS.MD5(ts + service['privateKey'] + service['publicKey']).toString();
+    const expectedUrl = `https://gateway.marvel.com/v1/public/characters?ts=${ts}&apikey=${service['publicKey']}&hash=${hash}&limit=10`;
+
+    const req = httpMock.expectOne(expectedUrl);
     expect(req.request.method).toBe('GET');
     req.flush(mockCharacters); // Simula a resposta da API
   });
@@ -63,7 +68,11 @@ describe('MarvelService', () => {
       expect(response.data.results[0].description).toBe('A superhero');
     });
 
-    const req = httpMock.expectOne('https://gateway.marvel.com/v1/public/characters/1?ts=');
+    const ts = new Date().getTime();
+    const hash = CryptoJS.MD5(ts + service['privateKey'] + service['publicKey']).toString();
+    const expectedUrl = `https://gateway.marvel.com/v1/public/characters/1?ts=${ts}&apikey=${service['publicKey']}&hash=${hash}`;
+
+    const req = httpMock.expectOne(expectedUrl);
     expect(req.request.method).toBe('GET');
     req.flush(mockCharacter);
   });
@@ -83,7 +92,11 @@ describe('MarvelService', () => {
       expect(response.data.results[0].title).toBe('Spider-Man #1');
     });
 
-    const req = httpMock.expectOne('https://gateway.marvel.com/v1/public/characters/1/comics?ts=');
+    const ts = new Date().getTime();
+    const hash = CryptoJS.MD5(ts + service['privateKey'] + service['publicKey']).toString();
+    const expectedUrl = `https://gateway.marvel.com/v1/public/characters/1/comics?ts=${ts}&apikey=${service['publicKey']}&hash=${hash}`;
+
+    const req = httpMock.expectOne(expectedUrl);
     expect(req.request.method).toBe('GET');
     req.flush(mockComics);
   });
@@ -95,7 +108,11 @@ describe('MarvelService', () => {
       expect(response).toBeTruthy(); // Espera que a resposta seja verdadeira ou não nula
     });
 
-    const req = httpMock.expectOne('https://gateway.marvel.com/v1/public/characters/1?ts=');
+    const ts = new Date().getTime();
+    const hash = CryptoJS.MD5(ts + service['privateKey'] + service['publicKey']).toString();
+    const expectedUrl = `https://gateway.marvel.com/v1/public/characters/1?ts=${ts}&apikey=${service['publicKey']}&hash=${hash}`;
+
+    const req = httpMock.expectOne(expectedUrl);
     expect(req.request.method).toBe('PUT');
     req.flush(updatedCharacter); // Simula a resposta de sucesso
   });
@@ -105,7 +122,11 @@ describe('MarvelService', () => {
       expect(response).toBeTruthy();
     });
 
-    const req = httpMock.expectOne('https://gateway.marvel.com/v1/public/characters/1?ts=');
+    const ts = new Date().getTime();
+    const hash = CryptoJS.MD5(ts + service['privateKey'] + service['publicKey']).toString();
+    const expectedUrl = `https://gateway.marvel.com/v1/public/characters/1?ts=${ts}&apikey=${service['publicKey']}&hash=${hash}`;
+
+    const req = httpMock.expectOne(expectedUrl);
     expect(req.request.method).toBe('DELETE');
     req.flush({}); // Resposta de sucesso (sem conteúdo)
   });
@@ -117,7 +138,11 @@ describe('MarvelService', () => {
       expect(response).toBeTruthy();
     });
 
-    const req = httpMock.expectOne('https://gateway.marvel.com/v1/public/characters?ts=');
+    const ts = new Date().getTime();
+    const hash = CryptoJS.MD5(ts + service['privateKey'] + service['publicKey']).toString();
+    const expectedUrl = `https://gateway.marvel.com/v1/public/characters?ts=${ts}&apikey=${service['publicKey']}&hash=${hash}`;
+
+    const req = httpMock.expectOne(expectedUrl);
     expect(req.request.method).toBe('POST');
     req.flush(newCharacter); // Simula a criação com o objeto de personagem
   });
