@@ -16,7 +16,7 @@ npm install
 npm start
 
 # Iniciar testes com Coverage
-npm start
+npm test
 ```
 
 ## Aplicação hospedada de forma estática no bucket da IBM Cloud.
